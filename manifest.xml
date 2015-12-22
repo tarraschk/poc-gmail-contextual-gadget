@@ -39,7 +39,7 @@
   can access content in multiple email parts, include a separate <Scope>
   tag for each one -- whether your gadget uses them all or not. -->
   
-<Extension id="_testExtractor_" type="contextExtractor">
+<Extension id="CapAjExtractor" type="contextExtractor">
   <Name>CAPAJ CRM Extractor</Name>
   <Url>google.com:HelloWorld</Url>
   <Param name="sender_email" value=".*"/>
