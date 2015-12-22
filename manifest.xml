@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+
+ Copyright (c) 2010 Project13.pl
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.            
+-->
+
+<ApplicationManifest xmlns="http://schemas.google.com/ApplicationManifest/2009">
+
+<!--  EXTRACTOR
+  Configures an extractor that will be used to get context to
+  trigger the gadget.  If the gadget uses multiple extractors, include a
+  separate <Extension> tag for each one.
+  id - give the extractor any name you like.
+  <Name> - a human-readable name for display to Google Apps administrators.
+  <Url> - the extractor ID, like google.com:HelloWorld.
+  <Param> - an extractor output field & regular expression
+  to filter the extractor's default output.
+  <Triggers> - the same gadget id that is defined
+  in the gadget element below.
+  <Scope> - a scope ID defined in a scope element below. If the extractor
+  can access content in multiple email parts, include a separate <Scope>
+  tag for each one -- whether your gadget uses them all or not. -->
+  
+<Extension id="_testExtractor_" type="contextExtractor">
+  <Name>CAPAJ CRM Extractor</Name>
+  <Url>google.com:HelloWorld</Url>
+  <Param name="sender_email" value=".*"/>
+  <Triggers ref="capajHelloWorld"/>
+  <Score ref="emailBody" />
+  <Scope ref="emailSubject"/>
+  <Container name="mail"/>
+</Extension>
+
+<!--  GADGET
+  Configures the gadget spec.
+  id - give the gadget any name you like.
+  <Name> - a human-readable name for display to Google Apps administrators.
+  <Url> - the location of the gadget spec. -->
+
+<Extension id="capajHelloWorld" type="gadget">
+  <Name>CAPAJ CRM Gadget</Name>
+  <Url>https://raw.githubusercontent.com/tarraschk/poc-gmail-contextual-gadget/master/gadget.xml</Url>
+  <Container name="mail"/>
+  <!-- Uncomment this to enable Caja. -->
+  <!-- Param name="caja" value="enabled"/> -->
+</Extension>
+
+<!--  SCOPE
+  Configures which email part the extractor(s) can access.
+  If the extractor can access content in multiple email parts,
+  include a separate <Scope> tag for each one -- whether your
+  gadget uses them all or not.
+  id - give the scope any name you like.
+  <Url> - a URI from the documented list of supported scopes.
+  If using a predefined extractor, use the scope(s) documented
+  for that extractor.
+  <Reason> - text to display to Google Apps domain administrators
+  so that they can decide whether to grant access. -->
+
+<Scope id="emailBody">
+  <Url>tag:google.com,2010:auth/contextual/extractor/BODY</Url>
+  <Reason>Necessary for reason 1</Reason>
+</Scope>
+
+<Scope id="emailSubject">
+  <Url>tag:google.com,2010:auth/contextual/extractor/SUBJECT</Url>
+  <Reason>Necessary for reason 2</Reason>
+</Scope>
+
+</ApplicationManifest>
